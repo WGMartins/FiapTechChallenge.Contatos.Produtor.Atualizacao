@@ -9,7 +9,8 @@ namespace TechChallenge.Domain.RegionalAggregate
         public string Email { get; set; }
         public Guid RegionalId { get; set; }
 
-        
+        public Regional Regional { get; set; }
+
         public Contato()
         {
         }
