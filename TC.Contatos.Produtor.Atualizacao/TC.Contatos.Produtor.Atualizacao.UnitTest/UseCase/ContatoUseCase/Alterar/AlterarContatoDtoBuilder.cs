@@ -1,7 +1,7 @@
 ﻿using Bogus;
-using TechChallenge.UseCase.ContatoUseCase.Alterar;
+using UseCase.ContatoUseCase.Alterar;
 
-namespace TechChallenge.UnitTest.UseCase.ContatoUseCase.Alterar
+namespace UnitTest.UseCase.ContatoUseCase.Alterar
 {
     public  class AlterarContatoDtoBuilder
     {

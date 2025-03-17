@@ -1,4 +1,4 @@
-﻿namespace TechChallenge.UseCase.ContatoUseCase.Alterar
+﻿namespace UseCase.ContatoUseCase.Alterar
 {
     public class AlterarContatoDto
     {

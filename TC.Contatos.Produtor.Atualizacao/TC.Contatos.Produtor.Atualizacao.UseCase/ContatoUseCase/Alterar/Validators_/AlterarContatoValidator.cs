@@ -1,14 +1,14 @@
 ﻿using FluentValidation;
 
-namespace TechChallenge.UseCase.ContatoUseCase.Alterar
+namespace UseCase.ContatoUseCase.Alterar
 {
     public class AlterarContatoValidator : AbstractValidator<AlterarContatoDto>
     {
         public AlterarContatoValidator()
         {
-            RuleFor(x => x.Nome)                
-                .NotEmpty()                
-                .WithMessage("Nome não pode ser nulo ou vazio")                
+            RuleFor(x => x.Nome)
+                .NotEmpty()
+                .WithMessage("Nome não pode ser nulo ou vazio")
                 .MaximumLength(100)
                 .WithMessage("Foi atingido o número máximo de caracteres (100)");
 

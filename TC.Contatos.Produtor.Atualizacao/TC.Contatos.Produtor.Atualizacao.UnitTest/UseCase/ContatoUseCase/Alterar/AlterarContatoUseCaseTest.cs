@@ -1,14 +1,14 @@
-﻿using FluentValidation;
+﻿using Domain.ContatoAggregate;
+using FluentValidation;
 using Moq;
-using TechChallenge.Domain.RegionalAggregate;
-using TechChallenge.UseCase.ContatoUseCase.Alterar;
+using UseCase.ContatoUseCase.Alterar;
 using UseCase.Interfaces;
 
-namespace TechChallenge.UnitTest.UseCase.ContatoUseCase.Alterar
+namespace UnitTest.UseCase.ContatoUseCase.Alterar
 {
     public class AlterarContatoUseCaseTest
     {
-        private readonly AlterarContatoDtoBuilder _builder;        
+        private readonly AlterarContatoDtoBuilder _builder;
         private readonly Mock<IMessagePublisher> _messagePublisher;
         private readonly IValidator<AlterarContatoDto> _validator;
         private readonly IAlterarContatoUseCase _alterarContatoUseCase;
@@ -27,16 +27,16 @@ namespace TechChallenge.UnitTest.UseCase.ContatoUseCase.Alterar
             // Arrange
             var alterarContatoDto = _builder.Default().Build();
 
-            _messagePublisher.Setup(s => s.PublishAsync(It.IsAny<Contato>()));           
+            _messagePublisher.Setup(s => s.PublishAsync(It.IsAny<Contato>()));
 
             // Act
             _alterarContatoUseCase.Alterar(alterarContatoDto);
 
             // Assert            
-            _messagePublisher.Verify(x => x.PublishAsync(It.IsAny<Contato>()), Times.Once());            
+            _messagePublisher.Verify(x => x.PublishAsync(It.IsAny<Contato>()), Times.Once());
 
         }
-        
+
         [Theory]
         [InlineData("")]
         [InlineData("     ")]
@@ -54,7 +54,7 @@ namespace TechChallenge.UnitTest.UseCase.ContatoUseCase.Alterar
             Assert.Contains("Nome não pode ser nulo ou vazio", result.Message);
         }
 
-        [Theory]        
+        [Theory]
         [InlineData("")]
         [InlineData("     ")]
         public void AlterarContatoUseCase_Alterar_ErroValidacaoTelefoneNuloVazio(string telefone)
@@ -73,7 +73,7 @@ namespace TechChallenge.UnitTest.UseCase.ContatoUseCase.Alterar
         }
 
         [Theory]
-        [InlineData("1234598-8546789")]        
+        [InlineData("1234598-8546789")]
         public void AlterarContatoUseCase_Alterar_ErroValidacaoTelefoneTamanho(string telefone)
         {
             // Arrange
@@ -88,10 +88,10 @@ namespace TechChallenge.UnitTest.UseCase.ContatoUseCase.Alterar
             Assert.Contains("Foi atingido o número máximo de caracteres (10)", result.Message);
         }
 
-        [Theory]        
+        [Theory]
         [InlineData("08645-6441")]
         [InlineData("34887037")]
-        [InlineData("999999999")]        
+        [InlineData("999999999")]
         public void AlterarContatoUseCase_Alterar_ErroValidacaoTelefoneFormato(string telefone)
         {
             // Arrange
@@ -106,9 +106,9 @@ namespace TechChallenge.UnitTest.UseCase.ContatoUseCase.Alterar
             Assert.Contains("Telefone inválido", result.Message);
         }
 
-        [Theory]        
+        [Theory]
         [InlineData("")]
-        [InlineData("     ")]        
+        [InlineData("     ")]
         public void AlterarContatoUseCase_Alterar_ErroValidacaoEmailNuloVazio(string email)
         {
             // Arrange
@@ -123,7 +123,7 @@ namespace TechChallenge.UnitTest.UseCase.ContatoUseCase.Alterar
             Assert.Contains("Email não pode ser nulo ou vazio", result.Message);
         }
 
-        [Theory]        
+        [Theory]
         [InlineData("testetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetesteteste" +
             "@testetestetestetestetestetestetestetestetestetestetesteteste")]
         public void AlterarContatoUseCase_Alterar_ErroValidacaoEmailTamanho(string email)
@@ -143,7 +143,7 @@ namespace TechChallenge.UnitTest.UseCase.ContatoUseCase.Alterar
         [Theory]
         [InlineData("testedeemail")]
         [InlineData("email@@gmail.com")]
-        [InlineData("teste@live")]        
+        [InlineData("teste@live")]
         public void AlterarContatoUseCase_Alterar_ErroValidacaoEmailFormato(string email)
         {
             // Arrange

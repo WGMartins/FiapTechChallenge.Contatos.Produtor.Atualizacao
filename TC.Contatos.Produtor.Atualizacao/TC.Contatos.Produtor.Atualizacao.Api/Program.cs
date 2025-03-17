@@ -8,14 +8,14 @@ using OpenTelemetry.Trace;
 using Prometheus;
 using RabbitMQ.Client;
 using System.Text.Json.Serialization;
-using TechChallenge.UseCase.ContatoUseCase.Alterar;
+using UseCase.ContatoUseCase.Alterar;
 using UseCase.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
-const string serviceName = "TechChallenge";
+const string serviceName = "TC.Contatos.Produto.Atualizacao";
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -46,7 +46,8 @@ builder.Services.AddOpenTelemetry()
 builder.Services.AddScoped<IAlterarContatoUseCase, AlterarContatoUseCase>();
 builder.Services.AddScoped<IValidator<AlterarContatoDto>, AlterarContatoValidator>();
 
-//RabbitMQ
+#region RabbitMQ
+
 builder.Services.AddSingleton<IMessagePublisher, RabbitMqMessagePublisher>();
 builder.Services.Configure<RabbitMQSettings>(builder.Configuration.GetSection("RabbitMQ"));
 
@@ -66,7 +67,8 @@ builder.Services.AddSingleton<Func<Task<IConnection>>>(sp =>
     var factory = sp.GetRequiredService<ConnectionFactory>();
     return () => factory.CreateConnectionAsync();
 });
-//RabbitMQ
+
+#endregion
 
 var app = builder.Build();
 

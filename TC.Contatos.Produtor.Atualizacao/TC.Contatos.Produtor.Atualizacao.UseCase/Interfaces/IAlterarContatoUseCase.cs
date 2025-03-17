@@ -1,4 +1,4 @@
-﻿using TechChallenge.UseCase.ContatoUseCase.Alterar;
+﻿using UseCase.ContatoUseCase.Alterar;
 
 namespace UseCase.Interfaces
 {

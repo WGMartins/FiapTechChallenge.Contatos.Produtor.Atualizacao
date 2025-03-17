@@ -1,16 +1,17 @@
-﻿using FluentValidation;
-using TechChallenge.Domain.RegionalAggregate;
+﻿using Domain.ContatoAggregate;
+using FluentValidation;
 using UseCase.Interfaces;
 
-namespace TechChallenge.UseCase.ContatoUseCase.Alterar
+namespace UseCase.ContatoUseCase.Alterar
 {
-    public class AlterarContatoUseCase : IAlterarContatoUseCase    {
-        
+    public class AlterarContatoUseCase : IAlterarContatoUseCase
+    {
+
         private readonly IValidator<AlterarContatoDto> _validator;
         private readonly IMessagePublisher _messagePublisher;
 
         public AlterarContatoUseCase(IValidator<AlterarContatoDto> validator, IMessagePublisher messagePublisher)
-        {            
+        {
             _validator = validator;
             _messagePublisher = messagePublisher;
         }
@@ -26,10 +27,10 @@ namespace TechChallenge.UseCase.ContatoUseCase.Alterar
                     mensagemValidacao = string.Concat(mensagemValidacao, item.ErrorMessage, ", ");
                 }
 
-                throw new Exception(mensagemValidacao.Remove(mensagemValidacao.Length-2));
+                throw new Exception(mensagemValidacao.Remove(mensagemValidacao.Length - 2));
             }
 
-            var contato = Contato.Criar(alterarContatoDto.Id, alterarContatoDto.Nome, alterarContatoDto.Telefone, alterarContatoDto.Email, alterarContatoDto.RegionalId);            
+            var contato = Contato.Criar(alterarContatoDto.Id, alterarContatoDto.Nome, alterarContatoDto.Telefone, alterarContatoDto.Email, alterarContatoDto.RegionalId);
 
             _messagePublisher.PublishAsync(contato);
 
