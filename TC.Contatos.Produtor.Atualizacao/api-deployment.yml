@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: produtor-atualizacao-api-deployment
+  labels:
+    app: produtor-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: produtor-api
+  template:
+    metadata:
+      labels:
+        app: produtor-api
+    spec:
+      containers:
+      - name: produtor-atualizacao-api
+        image: fiaptechchallenge.azurecr.io/contatos.produtor.atualizacao.api
+        envFrom:
+          - configMapRef:
+             name: configmap-api
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: produtor-atualizacao-api-service
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5076
+    targetPort: 8080
+  selector:
+    app: produtor-api
